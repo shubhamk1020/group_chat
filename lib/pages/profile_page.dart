@@ -54,7 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             ListTile(
               onTap: () {
-                nextScreenReplace(context, HomePage());
+                nextScreenReplace(context, const HomePage());
               },
               leading: const Icon(Icons.group),
               contentPadding:
@@ -97,8 +97,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             ),
                           ),
                           IconButton(
-                              onPressed: () async {
-                                await authService.signOut();
+                              onPressed: ()  {
+                                authService.signOut();
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) =>
@@ -124,6 +124,30 @@ class _ProfilePageState extends State<ProfilePage> {
           ],
         ),
       ),
+      body: Container(padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 145),
+           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children:  [
+           const Icon(Icons.account_circle, size: 200, color: Colors.grey,),
+           const SizedBox(height: 35,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+             const Text("userName", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300,fontSize: 17),),
+             Text(widget.userName,style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold,fontSize: 17) )
+            ],),
+             const Divider(height: 25,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+             const Text("userEmail", style: TextStyle(color: Colors.black, fontWeight: FontWeight.w300,fontSize: 17),),
+             Text(widget.userEmail,style: const TextStyle(color: Colors.blue, fontWeight: FontWeight.bold,fontSize: 17) )
+            ],),
+
+           ]),
+           
+            ),
+            
     );
   }
 }

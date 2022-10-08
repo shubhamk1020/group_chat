@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
               onPressed: () {
-                nextScreen(context, SearchPage());
+                nextScreen(context, const SearchPage());
               },
               icon: const Icon(Icons.search))
         ],
@@ -125,8 +125,8 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           IconButton(
-                              onPressed: () async {
-                                await authService.signOut();
+                              onPressed: ()  {
+                                 authService.signOut();
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(
                                         builder: (context) =>
