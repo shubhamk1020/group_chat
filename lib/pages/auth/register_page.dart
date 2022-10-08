@@ -64,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           fit: BoxFit.cover,
                           width: double.infinity,
                           height: 250,
-                        ),
+                          ),
                         const SizedBox(
                           height: 8,
                         ),
@@ -199,7 +199,6 @@ class _RegisterPageState extends State<RegisterPage> {
           await HelperFunction.savedUserLoggedInStatus(true);
           await HelperFunction.saveUserEmailSF(email);
           await HelperFunction.savedUserNameSF(fullName);
-
           
           nextScreenReplace(context, const HomePage());
         } else {

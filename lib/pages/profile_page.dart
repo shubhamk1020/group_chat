@@ -1,64 +1,35 @@
-import 'package:chat_app/Helper/helper_function.dart';
-import 'package:chat_app/pages/auth/login_page.dart';
-import 'package:chat_app/pages/profile_page.dart';
-import 'package:chat_app/pages/search_page.dart';
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/auth_service.dart';
 import 'package:chat_app/widgets/widget.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import 'auth/login_page.dart';
+
+
+class ProfilePage extends StatefulWidget {
+  final String userName;
+  final String userEmail;
+
+  const ProfilePage({super.key, required this.userName, required this.userEmail});
+ 
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String userName = "";
-  String email = "";
-
+class _ProfilePageState extends State<ProfilePage> {
   AuthService authService = AuthService();
-
-  @override
-  void initState() {
-    super.initState();
-    getUserData();
-  }
-
-  getUserData() async {
-    await HelperFunction.getUserEmailFromSF().then((value) {
-      setState(() {
-        email = value!;
-      });
-    });
-    await HelperFunction.getuserNameFromSF().then((val) {
-      setState(() {
-        userName = val!;
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-              onPressed: () {
-                nextScreen(context, SearchPage());
-              },
-              icon: const Icon(Icons.search))
-        ],
-        centerTitle: true,
-        backgroundColor: Theme.of(context).primaryColor,
-        elevation: 5,
-        title: const Text(
-          "Groups",
-          style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.w700, fontSize: 27),
-        ),
+    return   Scaffold(
+      appBar: AppBar(title: const Text("Profile", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 27,),
       ),
-      drawer: Drawer(
+      backgroundColor: Theme.of(context).primaryColor,
+      elevation: 5,
+      centerTitle: true,
+
+      ),
+      drawer:  Drawer(
         child: ListView(
           padding: const EdgeInsets.symmetric(vertical: 50),
           children: [
@@ -71,7 +42,7 @@ class _HomePageState extends State<HomePage> {
               height: 10,
             ),
             Text(
-              userName,
+              widget.userName,
               textAlign: TextAlign.center,
               style: const TextStyle(
                   color: Colors.black,
@@ -82,9 +53,9 @@ class _HomePageState extends State<HomePage> {
               height: 2,
             ),
             ListTile(
-              onTap: () {},
-              selectedColor: Theme.of(context).primaryColor,
-              selected: true,
+              onTap: () {
+                nextScreenReplace(context, HomePage());
+              },
               leading: const Icon(Icons.group),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -95,8 +66,9 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               onTap: () {
-                nextScreenReplace(context,  ProfilePage(userName: userName, userEmail: email,));
-              },
+                    },
+              selectedColor: Theme.of(context).primaryColor,
+              selected: true,
               leading: const Icon(Icons.person),
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
@@ -151,9 +123,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-      ),
-      body: const Center(
-        child: Text('This is home page '),
       ),
     );
   }

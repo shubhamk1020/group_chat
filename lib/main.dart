@@ -35,7 +35,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUserLoggedInStatus();
   }
@@ -43,7 +42,10 @@ class _MyAppState extends State<MyApp> {
   getUserLoggedInStatus() async {
     await HelperFunction.getUserLoggedInStatus().then((value) {
       if (value != null) {
-        _isSignedIn = value;
+        setState(() {
+           _isSignedIn = value;
+        });
+       
       }
     });
   }
