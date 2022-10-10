@@ -32,7 +32,7 @@ class _GorupTileState extends State<GroupTile> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         child: ListTile(
-          title: Text(widget.groupName),
+          title: Text(widget.groupName, style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 15),),
           subtitle: Text(
             "Join the conversion as ${widget.userName}",
             style: const TextStyle(fontWeight: FontWeight.w300, fontSize: 13),
