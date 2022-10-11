@@ -1,3 +1,4 @@
+![joined or nor check](https://user-images.githubusercontent.com/106364936/195024119-13c1930a-420d-41c0-bc93-f783a560b9fd.jpg)
 ![creat group](https://user-images.githubusercontent.com/106364936/194814575-4d8f29f3-e213-44a4-b077-0697ac4aba9d.jpg)
 ![group info](https://user-images.githubusercontent.com/106364936/194814582-342cddcc-289e-45f6-a317-2d8c548e2cc0.jpg)
 ![listTile](https://user-images.githubusercontent.com/106364936/194737787-94b5e68f-9667-4e86-9e85-e4e3cd2fd6a1.jpg)
