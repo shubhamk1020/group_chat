@@ -81,4 +81,50 @@ class DatabaseService {
   getGroupMember(groupId) async {
     return groupCollection.doc(groupId).snapshots();
   }
+
+  // search
+  searchByName(String groupName) {
+    return groupCollection.where("groupName", isEqualTo: groupName).get();
+  }
+
+  Future<bool> isUserJoined(
+      String userName, String groupId, String groupName) async {
+    DocumentReference documentReference = userCollection.doc(uid);
+    DocumentSnapshot documentSnapshot = await documentReference.get();
+
+    List<dynamic> groups = documentSnapshot["groups"];
+    if (groups.contains("${groupId}_$groupName")) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // toggling the group join/exit
+  Future toggleGroupJoin(
+      String userName, String groupId, String groupName) async {
+// doc refer
+    DocumentReference userDocumentReferance = userCollection.doc(uid);
+    DocumentReference groupDocumentReferance = groupCollection.doc(groupId);
+
+    DocumentSnapshot documentSnapshot = await userDocumentReferance.get();
+    List<dynamic> groups = documentSnapshot["groups"];
+
+    if (groups.contains("${groupId}_$groupName")) {
+      await userDocumentReferance.update({
+        "groups": FieldValue.arrayRemove(["${groupId}_$groupName"])
+      });
+
+      await groupDocumentReferance.update({
+        "members": FieldValue.arrayRemove(["${uid}_$userName"])
+      });
+    } else {
+      await userDocumentReferance.update({
+        "groups": FieldValue.arrayUnion(["${groupId}_$groupName"])
+      });
+      await groupDocumentReferance.update({
+        "members": FieldValue.arrayUnion(["${uid}_$userName"])
+      });
+    }
+  }
 }
