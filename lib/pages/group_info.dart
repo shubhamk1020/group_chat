@@ -1,4 +1,6 @@
+import 'package:chat_app/pages/home_page.dart';
 import 'package:chat_app/service/database_service.dart';
+import 'package:chat_app/widgets/widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -61,7 +63,43 @@ class _GroupInfoState extends State<GroupInfo> {
           actions: [
             IconButton(
                 onPressed: () {
-                  Navigator.of(context).pop;
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return AlertDialog(
+                          title: const Text("Exit"),
+                          content: const Text(
+                              "Are you sure you want to exit this group?"),
+                          actions: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(
+                                Icons.cancel,
+                                color: Colors.red,
+                              ),
+                            ),
+                            IconButton(
+                                onPressed: () async {
+                                  DatabaseService(
+                                          uid: FirebaseAuth
+                                              .instance.currentUser!.uid)
+                                      .toggleGroupJoin(
+                                          getName(widget.groupAdmin),
+                                          widget.groupId,
+                                          widget.groupName)
+                                      .whenComplete(() {
+                                    nextScreen(context, HomePage());
+                                  });
+                                },
+                                icon: const Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                ))
+                          ],
+                        );
+                      });
                 },
                 icon: const Icon(Icons.exit_to_app))
           ],
@@ -137,12 +175,13 @@ class _GroupInfoState extends State<GroupInfo> {
                           radius: 30,
                           backgroundColor: Theme.of(context).primaryColor,
                           child: Text(
-                            getName(snapshot.data['members'][index]).substring(0, 1).toUpperCase(),
+                            getName(snapshot.data['members'][index])
+                                .substring(0, 1)
+                                .toUpperCase(),
                             style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold
-                            ),
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
                         title: Text(getName(snapshot.data['members'][index])),
